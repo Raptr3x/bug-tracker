@@ -1,2 +1,2 @@
 # bug-tracker
-A bug tracker made with Python Flask
+A bug tracker web app made with Python Flask
