@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.content{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.col-3{
+    display: grid;
+    align-content: space-around;
+    height: 60vh;
+    width: 30vw;
+    padding: 10%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: solid black 1px;
+    border-radius: 10px;
+}
+
+fieldset{
+    display: grid;
+    align-content: space-between;
+}
