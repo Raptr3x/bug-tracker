@@ -16,8 +16,12 @@ login_manager.login_message_category = 'info'
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = "pauline.matthes58@gmail.com"
-app.config['MAIL_PASSWORD'] = "Nem@njin@12!"
+
+with open('secret.txt', 'r') as f:
+    email, password = f.read().split(",")
+    
+app.config['MAIL_USERNAME'] = email
+app.config['MAIL_PASSWORD'] = password
 mail = Mail(app)
 
 from bugtracker import routes

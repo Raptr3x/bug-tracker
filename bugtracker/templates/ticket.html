@@ -5,7 +5,7 @@
     <!-- Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library -->
       <li class="nav-item mb-3">
-          <a href="{{ url_for('create_ticket') }}" class="nav-link active">
+          <a href="{{ url_for('create_ticket') }}" class="nav-link">
               <i class="nav-icon fas fa-plus"></i>
               <p>
               Create New Ticket
@@ -13,7 +13,7 @@
           </a>
       </li>
       <li class="nav-item">
-          <a href="{{ url_for('home') }}" class="nav-link">
+          <a href="{{ url_for('home') }}" class="nav-link ">
               <i class="nav-icon fas fa-clipboard-list"></i>
               <p>
               Tickets
@@ -21,13 +21,13 @@
           </a>
       </li>
       <li class="nav-item">
-          <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
-              <p>
-              Diagrams
-              </p>
-          </a>
-      </li>
+        <a href="{{url_for('diagrams')}}" class="nav-link">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+            Diagrams
+            </p>
+        </a>
+    </li>
       {% if current_user.access=="admin" %}
       <li class="nav-item">
         <a href="{{ url_for('register_admin')}}" class="nav-link">
@@ -71,9 +71,10 @@
             </div>
             <div class="info">
             <a href="#" class="d-block">{{ticket.author.name}}</a>
+            <small>{{ticket.date_posted.strftime('%H:%M %d-%m-%Y')}}</small>
             </div>
         </div>
-        <div class="m-3">
+        <div class="ml-3">
             <span class="badge bg-{{state[ticket.state]}}">{{ticket.state}}</span>
             <span class="badge bg-{{severity[ticket.severity]}}">{{ticket.severity}}</span>
         </div>
