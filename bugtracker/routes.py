@@ -8,7 +8,6 @@ from bugtracker.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
 from bugtracker.models import User, Ticket
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
-from flask_paginate import Pagination, get_page_parameter
 
 ticket_severity_class = {
     "minor":"info",
