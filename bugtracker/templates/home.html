@@ -120,7 +120,7 @@
                         </td>
                         {% if current_user.access=="admin" %}
                         <td class="admin-ticket-settings">
-                            <a href="{{url_for('update_ticket', ticket_id=ticket.id)}}"><i class="fas fa-ellipsis-h"></i></a>
+                            <a href="{{url_for('ticket', ticket_id=ticket.id)}}"><i class="fas fa-ellipsis-h"></i></a>
                         </td>
                         {% endif %}
                     </tr>

@@ -1,0 +1,130 @@
+{% extends "layout_dashboard.html" %}
+
+{% block nav_links %}
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <!-- Add icons to the links using the .nav-icon class
+         with font-awesome or any other icon font library -->
+      <li class="nav-item mb-3">
+          <a href="{{ url_for('create_ticket') }}" class="nav-link active">
+              <i class="nav-icon fas fa-plus"></i>
+              <p>
+              Create New Ticket
+              </p>
+          </a>
+      </li>
+      <li class="nav-item">
+          <a href="{{ url_for('home') }}" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+              Tickets
+              </p>
+          </a>
+      </li>
+      <li class="nav-item">
+          <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+              Diagrams
+              </p>
+          </a>
+      </li>
+      {% if current_user.access=="admin" %}
+      <li class="nav-item">
+        <a href="{{ url_for('register_admin')}}" class="nav-link">
+            <i class="nav-icon fas fa-user-plus"></i>
+            <p>
+            Create Admin Account
+            </p>
+        </a>
+    </li>
+    {% endif%}
+      <li class="nav-item">
+          <a href="{{ url_for('account')}}" class="nav-link">
+              <i class="nav-icon fas fa-user-cog"></i>
+              <p>
+              Settings
+              </p>
+          </a>
+      </li>
+      <li class="nav-item">
+          <a href="{{url_for('logout')}}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+              Logout
+              </p>
+          </a>
+      </li>
+  </ul>
+{% endblock nav_links %}
+
+{% block content %}
+<div class="col-md-6">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Ticket</h3>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div class="user-panel mt-3 pb-3 d-flex">
+            <div class="image">
+            <img src="{{ url_for('static', filename='profile_pics/' + ticket.author.image_file) }}" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+            <a href="#" class="d-block">{{ticket.author.name}}</a>
+            </div>
+        </div>
+        <div class="m-3">
+            <span class="badge bg-{{state[ticket.state]}}">{{ticket.state}}</span>
+            <span class="badge bg-{{severity[ticket.severity]}}">{{ticket.severity}}</span>
+        </div>
+        <div class="ml-3 mt-5">
+            <h2 class="">{{ ticket.title }}</h2>
+            <p class="text-muted">{{ ticket.content }}</p>
+        </div>
+        <hr>
+        <div class="m-3">
+            <a class="btn btn-primary mt-1 mb-1" href="{{ url_for('update_ticket', ticket_id=ticket.id) }}">Update</a>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+        </div>
+    </div>
+    <!-- /.card -->
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Ticket?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action="{{ url_for('delete_ticket', ticket_id=ticket.id) }}" method="POST">
+              <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Delete Ticket?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <form action="{{ url_for('delete_ticket', ticket_id=ticket.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Delete">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock content %}

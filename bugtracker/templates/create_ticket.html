@@ -63,6 +63,7 @@
     <!-- general form elements disabled -->
     <div class="card card-primary">
       <div class="card-header">
+        <!-- When admin, should be update ticket -->
         <h3 class="card-title">Submit a ticket</h3>
       </div>
       <!-- /.card-header -->
@@ -103,7 +104,7 @@
                     {{form.state(class="form-control")}}
                   </div>
               </div>
-              </div>
+            </div>
               {% endif %}
             <div class="m-t-20">
                 {{ form.submit(class="btn btn-primary", placeholder="Submit") }}

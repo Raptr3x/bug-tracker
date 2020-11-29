@@ -10,6 +10,17 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 from flask_paginate import Pagination, get_page_parameter
 
+ticket_severity_class = {
+    "minor":"info",
+    "functional":"warning",
+    "critical":"danger"
+}
+ticket_state_class = {
+    "pending":"primary",
+    "working on it":"warning",
+    "fixed":"success",
+    "rejected":"danger"
+}
 
 @app.route("/")
 @app.route("/home")
@@ -17,19 +28,8 @@ from flask_paginate import Pagination, get_page_parameter
 def home():
     page = request.args.get('page', default=1, type=int)
     tickets = Ticket.query.order_by(Ticket.date_posted.desc()).paginate(page=page, per_page=10)
-    state = {
-        "pending":"primary",
-        "working on it":"warning",
-        "fixed":"success",
-        "rejected":"danger"
-    }
-    severity = {
-        "minor":"info",
-        "functional":"warning",
-        "critical":"danger"
-    }
-    #state and severiry class
-    return render_template('home.html', tickets=tickets, state=state, severity=severity)
+    
+    return render_template('home.html', tickets=tickets, severity=ticket_severity_class, state=ticket_state_class)
 
 
 @app.route("/about")
@@ -141,7 +141,7 @@ def create_ticket():
 @app.route("/ticket/<int:ticket_id>")
 def ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
-    return render_template('ticket.html', title=ticket.title, ticket=ticket)
+    return render_template('ticket.html', ticket=ticket, severity=ticket_severity_class, state=ticket_state_class)
 
 
 @app.route("/ticket/<int:ticket_id>/update", methods=['GET', 'POST'])
@@ -158,14 +158,14 @@ def update_ticket(ticket_id):
         ticket.state = form.state.data
         db.session.commit()
         flash('The ticket has been updated!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('ticket', ticket_id=ticket.id))
     elif request.method == 'GET':
         form.title.data = ticket.title
         form.content.data = ticket.content
         form.severity.data = ticket.severity
         form.state.data = ticket.state
     return render_template('create_ticket.html', title='Update Ticket',
-                           form=form, legend='Update Ticket')
+                           form=form, ticket=ticket)
 
 
 @app.route("/ticket/<int:ticket_id>/delete", methods=['POST'])
@@ -176,7 +176,7 @@ def delete_ticket(ticket_id):
         abort(403)
     db.session.delete(ticket)
     db.session.commit()
-    flash('Your ticket has been deleted!', 'success')
+    flash('The ticket has been deleted!', 'success')
     return redirect(url_for('home'))
 
 
@@ -232,3 +232,4 @@ def reset_token(token):
         flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
+
