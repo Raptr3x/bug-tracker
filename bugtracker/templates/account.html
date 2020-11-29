@@ -1,0 +1,124 @@
+{% extends "layout_dashboard.html" %}
+
+{% block nav_links %}
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <!-- Add icons to the links using the .nav-icon class
+         with font-awesome or any other icon font library -->
+      <li class="nav-item mb-3">
+          <a href="{{ url_for('create_ticket') }}" class="nav-link">
+              <i class="nav-icon fas fa-plus"></i>
+              <p>
+              Create New Ticket
+              </p>
+          </a>
+      </li>
+      <li class="nav-item">
+          <a href="{{ url_for('home') }}" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+              Tickets
+              </p>
+          </a>
+      </li>
+      <li class="nav-item">
+          <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+              Diagrams
+              </p>
+          </a>
+      </li>
+      {% if current_user.access=="admin" %}
+      <li class="nav-item">
+        <a href="{{ url_for('register_admin')}}" class="nav-link">
+            <i class="nav-icon fas fa-user-plus"></i>
+            <p>
+            Create Admin Account
+            </p>
+        </a>
+    </li>
+    {% endif%}
+      <li class="nav-item">
+          <a href="{{ url_for('account')}}" class="nav-link active">
+              <i class="nav-icon fas fa-user-cog"></i>
+              <p>
+              Settings
+              </p>
+          </a>
+      </li>
+      <li class="nav-item">
+          <a href="{{url_for('logout')}}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+              Logout
+              </p>
+          </a>
+      </li>
+  </ul>
+{% endblock nav_links %}
+
+{% block content %}
+
+<div class="col-6">
+<div class="card card-primary card-outline">
+    <div class="card-body box-profile">
+        <div class="text-center">
+            <img class="profile-user-img img-fluid img-circle" src="{{ image_file }}" alt="User profile picture">
+        </div>
+
+        <h2 class="text-center">{{ current_user.name.title() }}</h2>
+
+        <p class="text-muted text-center email-about">{{ current_user.email }}</p>
+
+        <div class="content-section">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Edit Account Info</legend>
+                    <div class="form-group">
+                        {{ form.name.label(class="card-title")}}
+
+                        {% if form.name.errors %}
+                            {{ form.name(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.name.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.name(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.email.label(class="card-title") }}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.picture.label( class="card-title") }}
+                        <br>
+                        {{ form.picture(class="btn") }}
+                        {% if form.picture.errors %}
+                            {% for error in form.picture.errors %}
+                                <span class="text-danger">{{ error }}</span></br>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}

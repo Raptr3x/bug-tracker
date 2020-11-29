@@ -1,0 +1,27 @@
+
+.info small{
+  color: #007bff;
+}
+
+.email-about{
+  font-size: 1rem;
+}
+
+.ticket-title{
+  width: 20vw;
+}
+
+
+.collapsed-desc{
+  background: rgba(226, 226, 226, 0.19);
+  box-shadow: inset 0px 6px 7px 0px #00000047;
+
+}
+
+.badge{
+  font-size: 100%;
+}
+
+.admin-ticket-settings{
+  width: 5vw;
+}
