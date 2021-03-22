@@ -1,3 +1,5 @@
 secret.txt
 /venv/
 /__pychache__/
+debug.log
+Procfile
